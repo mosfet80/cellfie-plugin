@@ -37,8 +37,6 @@ import org.semanticweb.owlapi.model.OWLOntologyChange;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyID;
 
-import com.google.common.base.Optional;
-
 public class GenerateAxiomsAction implements ActionListener
 {
    private WorkspacePanel container;
@@ -138,7 +136,7 @@ public class GenerateAxiomsAction implements ActionListener
                break;
             case ADD_TO_NEW_ONTOLOGY :
                OWLOntologyID id = createOntologyID();
-               OWLOntology newOntology = modelManager.createNewOntology(id, id.getDefaultDocumentIRI().get().toURI());
+               OWLOntology newOntology = modelManager.createNewOntology(id, id.getDefaultDocumentIRI().toURI());
                modelManager.applyChanges(addImport(newOntology, currentOntology));
                modelManager.applyChanges(addAxioms(newOntology, axioms));
                break;
@@ -153,9 +151,9 @@ public class GenerateAxiomsAction implements ActionListener
    private List<? extends OWLOntologyChange> addImport(OWLOntology newOntology, OWLOntology currentOntology)
    {
       List<OWLOntologyChange> changes = new ArrayList<OWLOntologyChange>();
-      Optional<IRI> ontologyIri = currentOntology.getOntologyID().getOntologyIRI();
-      if (ontologyIri.isPresent()) {
-         OWLImportsDeclaration importDeclaration = modelManager.getOWLDataFactory().getOWLImportsDeclaration(ontologyIri.get());
+      IRI ontologyIri = currentOntology.getOntologyID().getOntologyIRI();
+      if (ontologyIri != null) {
+         OWLImportsDeclaration importDeclaration = modelManager.getOWLDataFactory().getOWLImportsDeclaration(ontologyIri);
          changes.add(new AddImport(newOntology, importDeclaration));
       }
       return changes;
@@ -165,7 +163,7 @@ public class GenerateAxiomsAction implements ActionListener
    {
       OntologyPreferences ontologyPreferences = OntologyPreferences.getInstance();
       IRI freshIRI = IRI.create(ontologyPreferences.generateNextURI());
-      return new OWLOntologyID(Optional.of(freshIRI), Optional.absent());
+      return new OWLOntologyID(freshIRI);
    }
 
    private List<OWLOntologyChange> addAxioms(OWLOntology ontology, Set<OWLAxiom> axioms)

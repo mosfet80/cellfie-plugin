@@ -11,8 +11,8 @@
 
    <properties>
       <java.version>1.8</java.version>
-      <protege.version>5.0.0-beta-18-SNAPSHOT</protege.version>
-      <mappingmaster.version>1.2</mappingmaster.version>
+      <protege.version>5.0.0-beta-17</protege.version>
+      <mappingmaster.version>1.1.1</mappingmaster.version>
       <log4j.version>1.2.17</log4j.version>
       <maven.compiler.plugin.version>2.3.2</maven.compiler.plugin.version>
       <maven.bundle.plugin.version>2.5.3</maven.bundle.plugin.version>
@@ -69,7 +69,7 @@
                   <Import-Package>
                      org.apache.log4j.*;version="[1.2,2)",
                      org.protege.editor.owl.*;version="[5.0, 6.0)",
-                     org.semanticweb.owlapi.*;version="[4.0, 4.9)",
+                     org.semanticweb.owlapi.*;version="[3.0,3.9)",
                      junit.framework;resolution:=optional,
                      org.apache.*;resolution:=optional,
                      org.bouncycastle.*;resolution:=optional,
